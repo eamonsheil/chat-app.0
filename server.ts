@@ -5,16 +5,24 @@ const app = express();
 const http = require('http');
 const server = http.createServer(app);
 import { Server } from 'socket.io';
-const io = new Server<ClientToServerEvents, ServerToClientEvents, InterServerEvents, SocketData>();
+const cors = require('cors');
+
+app.use(cors());
+
+const io = new Server<ClientToServerEvents, ServerToClientEvents, InterServerEvents, SocketData>(server, {
+    cors: {
+        origin: 'http://localhost:3000/'
+    }
+});
 
 
 
-app.get('/', (req, res) => {
+app.get('/', (req: any, res: { send: (arg0: string) => void; }) => {
     res.send('Hello')
 })
 
 io.on('connection', (socket) => {
-    console.log('a user has connected')
+    console.log(socket.id, 'a user has connected')
 })
 
 server.listen(4000, () => {

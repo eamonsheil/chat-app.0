@@ -5,12 +5,16 @@ var app = express();
 var http = require('http');
 var server = http.createServer(app);
 var socket_io_1 = require("socket.io");
-var io = new socket_io_1.Server(server);
+var io = new socket_io_1.Server(server, {
+    cors: {
+        origin: 'http://localhost:3000/'
+    }
+});
 app.get('/', function (req, res) {
     res.send('Hello');
 });
 io.on('connection', function (socket) {
-    console.log('a user has connected');
+    console.log(socket.id, 'a user has connected');
 });
 server.listen(4000, function () {
     console.log('listening on *:4000');
