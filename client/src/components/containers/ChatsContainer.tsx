@@ -1,14 +1,30 @@
 import { useState } from 'react';
 import { IMessage } from '../../Interfaces';
+import io from 'socket.io-client';
 
 
 function ChatsContainer() {
     const [message, setMessage] = useState<string>("")
     const [username, setUsername] = useState<string>("")
     const [chatHistory, setChatHistory] = useState<IMessage[]>([])
+
+
+    const socket = io('http://localhost:4000');
+
+    socket.on("connect", () => {
+        // socket.id is a random 20 char identifier that is assigned to each connection
+        // the identifier is synced with the value on the server-side
+        // socket.connected is a boolean value indicating whether the socket is currently connected
+        console.log(socket.id, "socket connected", socket.connected)
+    })
+    socket.on("disconnect", () =>{
+        console.log(socket.id, "socket disconnected")
+    })
+
     
-        const handleSubmit = (e) => {
+        const handleSubmit = (e:any) => {
             e.preventDefault()
+            socket.emit();
             const messageInfo:IMessage = {
                 message: message,
                 username: username
@@ -30,7 +46,7 @@ function ChatsContainer() {
                     {chatHistory.map((message) => {
                         return(
                             <div>
-                                <span><b>{message.user}: </b></span>
+                                <span><b>{message.username}: </b></span>
                                 <span>{message.message}</span>
                             </div>
                         )

@@ -1,10 +1,11 @@
-import { io } from 'socket.io-client';
-import Emitter from 'component-emitter';
+import io from 'socket.io-client';
+import ChatsContainer from './components/containers/ChatsContainer';
+
 
 function App() {
   // create new Manager (manages Engine.io client instance -> the low level engine that establishes the servre connection) 
   // for localhost:4000, and attempts to reuse it for subsequent calls
-  const socket= io('http://localhost:4000');
+  const socket = io('http://localhost:4000');
 
   socket.on("connect", () => {
     // socket.id is a random 20 char identifier that is assigned to each connection
@@ -18,7 +19,7 @@ function App() {
 
   return (
     <div className="App">
-      Hello
+      <ChatsContainer/>
     </div>
   );
 }
