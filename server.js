@@ -17,6 +17,10 @@ app.get('/', function (req, res) {
 });
 io.on('connection', function (socket) {
     console.log(socket.id, 'a user has connected');
+    socket.on("message", function (data) {
+        socket.broadcast.emit("recieve_message", data);
+        console.log("backend: ", data);
+    });
 });
 server.listen(4000, function () {
     console.log('listening on *:4000');

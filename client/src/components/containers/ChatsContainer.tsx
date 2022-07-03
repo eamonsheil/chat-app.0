@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { IMessage } from '../../Interfaces';
 import io from 'socket.io-client';
 
@@ -10,6 +10,15 @@ function ChatsContainer() {
 
 
     const socket = io('http://localhost:4000');
+
+    useEffect(() => {
+        socket.on("recieve_message", (data) => {
+            console.log("frontend: ",data)
+            setChatHistory([...chatHistory, data])
+        })
+    },[socket])
+
+
 
     socket.on("connect", () => {
         // socket.id is a random 20 char identifier that is assigned to each connection
@@ -24,12 +33,13 @@ function ChatsContainer() {
     
         const handleSubmit = (e:any) => {
             e.preventDefault()
-            socket.emit();
+            
             const messageInfo:IMessage = {
                 message: message,
                 username: username
             }
-            setChatHistory([...chatHistory, messageInfo])
+            
+            socket.emit("message", messageInfo);
         }
     
     

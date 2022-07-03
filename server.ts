@@ -9,9 +9,9 @@ const cors = require('cors');
 
 app.use(cors());
 
-const io = new Server<ClientToServerEvents, ServerToClientEvents, InterServerEvents, SocketData>(server, {
+const io = new Server(server, {
     cors: {
-        origin: 'http://localhost:3000/'
+        origin: 'http://localhost:3000'
     }
 });
 
@@ -23,7 +23,14 @@ app.get('/', (req: any, res: { send: (arg0: string) => void; }) => {
 
 io.on('connection', (socket) => {
     console.log(socket.id, 'a user has connected')
+
+    socket.on("message", (data) => {
+        socket.broadcast.emit("recieve_message", data)
+        console.log("backend: ", data)
+    })
 })
+
+
 
 server.listen(4000, () => {
     console.log('listening on *:4000');
