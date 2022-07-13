@@ -1,4 +1,15 @@
 "use strict";
+var __assign = (this && this.__assign) || function () {
+    __assign = Object.assign || function(t) {
+        for (var s, i = 1, n = arguments.length; i < n; i++) {
+            s = arguments[i];
+            for (var p in s) if (Object.prototype.hasOwnProperty.call(s, p))
+                t[p] = s[p];
+        }
+        return t;
+    };
+    return __assign.apply(this, arguments);
+};
 exports.__esModule = true;
 var express = require('express');
 var app = express();
@@ -18,7 +29,8 @@ app.get('/', function (req, res) {
 io.on('connection', function (socket) {
     console.log(socket.id, 'a user has connected');
     socket.on("message", function (data) {
-        socket.broadcast.emit("recieve_message", data);
+        var answer = __assign(__assign({}, data), { sent: false });
+        socket.broadcast.emit("recieve_message", answer);
         console.log("backend: ", data);
     });
 });

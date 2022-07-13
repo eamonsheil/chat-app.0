@@ -25,7 +25,8 @@ io.on('connection', (socket) => {
     console.log(socket.id, 'a user has connected')
 
     socket.on("message", (data) => {
-        socket.broadcast.emit("recieve_message", data)
+        const answer = { ...data, sent: false }
+        socket.broadcast.emit("recieve_message", answer)
         console.log("backend: ", data)
     })
 })
