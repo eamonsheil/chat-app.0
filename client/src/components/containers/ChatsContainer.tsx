@@ -7,7 +7,9 @@ import { PageContainer,
         SentMessage,
         RecievedMessage,
         SentContainer,
-        RecievedContainer } from './Styles/Chats.Styles'
+        RecievedContainer,
+        MessageInput, 
+        ChatSearch} from './Styles/Chats.Styles'
 
 const socket = io('http://localhost:4000');
 
@@ -59,9 +61,17 @@ function ChatsContainer() {
             socket.emit("message", messageInfo);
         }
     
+        const searchChatHistory = (e:any) => {
+            e.preventDefault()
+            console.log("searchin")
+        }
     
         return (        
             <PageContainer>
+                <ChatSearch onSubmit={searchChatHistory}>
+                    <input type='text'/>
+                    <button type='submit'>Search Chat</button>
+                </ChatSearch>
                 <ChatContainer>
                         {messageThread.map((message) => {
                             if(message.sent){
@@ -89,13 +99,13 @@ function ChatsContainer() {
                         })}
                         <div ref={dummyDiv}/>
                 </ChatContainer>
-                <form onSubmit={handleSubmit}>
+                <MessageInput onSubmit={handleSubmit}>
                     <input type='text' 
                         placeholder='Your message here...' 
                         value={message}
                         onChange={(e) => setMessage(e.target.value)}/>
                     <button type='submit'>Send</button>
-                </form> 
+                </MessageInput>
             </PageContainer>
          );
     }

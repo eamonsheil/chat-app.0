@@ -1,6 +1,7 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
 import { getAuth, GoogleAuthProvider, signInWithRedirect, signInWithPopup } from 'firebase/auth';
 import { useNavigate } from 'react-router-dom';
+import { UserContext } from './context/UserContextProvider';
 
 export interface ILoginProps {
 }
@@ -11,6 +12,8 @@ export function Login (props: ILoginProps) {
     const [authing, setAuthing] = useState(false)
     const navigate = useNavigate();
 
+    const {user, setUser} = useContext(UserContext)
+
     provider.addScope('profile')
     provider.addScope('email')
  
@@ -19,6 +22,7 @@ export function Login (props: ILoginProps) {
         await signInWithPopup(auth, provider)
             .then((res) => {
                 console.log(res.user);
+                setUser({name: res.user.displayName, email: res.user.email})
                 navigate('/chat');
             });
 

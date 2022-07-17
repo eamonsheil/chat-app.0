@@ -2,13 +2,15 @@ import styled from 'styled-components';
 
 
 export const PageContainer = styled.div`
-    width:80%;
-    margin: 0 10%;
+    width:60%;
+    /* margin: 0 20%; */
     display: flex;
     flex-direction: column;
     align-items: center;
-    /* justify-content: space-between; */
-    height: 50vh;
+    justify-content: space-between;
+    height: 90vh;
+    border:1px solid red;
+
 `
 export const ChatContainer = styled.div`
     width: 100%;
@@ -16,7 +18,7 @@ export const ChatContainer = styled.div`
     flex-direction: column;
     /* justify-content: flex-end; */
     /* flex-flow: column nowrap; */
-    height:60vh;
+    height:80%;
     overflow: auto;
     border:1px solid black;
     /* margin: 5em 0;     */
@@ -43,7 +45,7 @@ export const RecievedContainer = styled.div`
 
 export const SentMessage = styled.div`
     min-height: 1em;
-    max-width:8em;
+    max-width:60%;
     min-width: 1.5em;
     background-color: #0000ff90;
     border-radius: .4em;
@@ -58,7 +60,7 @@ export const SentMessage = styled.div`
 `
 export const RecievedMessage = styled.div`
     min-height: 1em;
-    max-width: 8em;
+    max-width: 60%;
     background-color: #0000ff59;
     border-radius: .4em;
     display: flex;
@@ -68,4 +70,18 @@ export const RecievedMessage = styled.div`
     /* margin: 1em 0; */
     padding: .3em;
     
+`
+
+export const MessageInput = styled.form`
+    height:15%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+`
+
+export const ChatSearch = styled.form`
+    height:5%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 `
