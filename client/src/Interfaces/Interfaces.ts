@@ -4,3 +4,4 @@ export type IMessage = {
     time: string;
     sent?: boolean;
 }
+

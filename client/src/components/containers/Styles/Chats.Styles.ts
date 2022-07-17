@@ -14,10 +14,16 @@ export const ChatContainer = styled.div`
     width: 100%;
     display: flex;
     flex-direction: column;
-    justify-content: space-between;
+    /* justify-content: flex-end; */
+    /* flex-flow: column nowrap; */
     height:60vh;
-    overflow: scroll;
+    overflow: auto;
+    border:1px solid black;
     /* margin: 5em 0;     */
+
+    &:nth-child(1) {
+        margin-top: auto;
+    }
 `
 
 export const SentContainer = styled.div`
@@ -48,9 +54,6 @@ export const SentMessage = styled.div`
     /* margin: 1em 0; */
     padding: .3em;
 
-    @media screen {
-        
-    }
     
 `
 export const RecievedMessage = styled.div`

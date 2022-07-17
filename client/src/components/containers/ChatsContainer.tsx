@@ -1,5 +1,5 @@
-import { useState, useEffect, useRef } from 'react';
-import { IMessage } from '../../Interfaces';
+import { useState, useLayoutEffect, createRef, useRef } from 'react';
+import { IMessage } from '../../Interfaces/Interfaces';
 import io from "socket.io-client";
  
 import { PageContainer,
@@ -16,14 +16,18 @@ function ChatsContainer() {
     const [messageThread, setMessageThread] = useState<IMessage[]>([]);
     const [username, setUsername] = useState<string>("")
 
-    // const messagesRef = useRef<HTMLDivElement>(null);
+    const dummyDiv = useRef<HTMLDivElement>(null);
 
-    // useEffect(() => scrolltoBottom, [messageThread]);
+    useLayoutEffect(() => {
+        scrolltoBottom()
+        console.log(dummyDiv.current)
+    }, [messageThread]);
     
 
-    // const scrolltoBottom = () => {
-    //     messagesRef?.current?.scrollIntoView({behavior:'smooth'})
-    // }
+    const scrolltoBottom = () => {
+        console.log('scrolling')
+        dummyDiv.current?.scrollIntoView({ behavior:"smooth" })
+    }
    
         socket.on("recieve_message", (data) => {
             console.log(data)
@@ -57,14 +61,8 @@ function ChatsContainer() {
     
     
         return (        
-            <PageContainer>  
-                <div>
-                    <input type="text" 
-                        placeholder='choose a username'
-                        value={username}
-                        onChange={(e) => setUsername(e.target.value)}/>        
-                </div>
-                <ChatContainer >
+            <PageContainer>
+                <ChatContainer>
                         {messageThread.map((message) => {
                             if(message.sent){
                                 return(
@@ -89,6 +87,7 @@ function ChatsContainer() {
                                 )
                             }
                         })}
+                        <div ref={dummyDiv}/>
                 </ChatContainer>
                 <form onSubmit={handleSubmit}>
                     <input type='text' 
@@ -96,7 +95,7 @@ function ChatsContainer() {
                         value={message}
                         onChange={(e) => setMessage(e.target.value)}/>
                     <button type='submit'>Send</button>
-                </form>
+                </form> 
             </PageContainer>
          );
     }
