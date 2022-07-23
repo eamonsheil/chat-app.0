@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { ChatLink, SidebarContainer } from './Styles/Sidebar.Styles';
-import CreateIcon from '@mui/icons-material/Create';
+// import CreateIcon from '@mui/icons-material/Create';
 
 export interface IChatSidebarProps {
 }

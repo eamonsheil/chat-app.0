@@ -1,5 +1,6 @@
 import React, { useContext } from 'react';
 import { Login } from '../Login';
+import { Logout } from '../Logout';
 
 export interface IHomePageProps {
 }

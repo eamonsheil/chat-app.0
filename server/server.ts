@@ -1,13 +1,21 @@
 import { ServerToClientEvents, ClientToServerEvents, InterServerEvents, SocketData } from './Interfaces.server';
 
-const express = require('express');
-const app = express();
-const http = require('http');
+import express, { Express, Request, Response } from 'express';
+import dotenv from 'dotenv'
+
+const app: Express = express();
+const port = process.env.PORT
+
+import http from 'http';
 const server = http.createServer(app);
 import { Server } from 'socket.io';
-const cors = require('cors');
+import cors from 'cors';
+import UserRouter from './routes/UserRoutes'
 
 app.use(cors());
+app.use(express.json());
+app.use('/api/user', UserRouter)
+
 
 const io = new Server(server, {
     cors: {
@@ -17,7 +25,7 @@ const io = new Server(server, {
 
 
 
-app.get('/', (req: any, res: { send: (arg0: string) => void; }) => {
+app.get('/', (req: Request, res: Response) => {
     res.send('Hello')
 })
 
@@ -33,7 +41,7 @@ io.on('connection', (socket) => {
 
 
 
-server.listen(4000, () => {
+server.listen(port, () => {
     console.log('listening on *:4000');
 })
 

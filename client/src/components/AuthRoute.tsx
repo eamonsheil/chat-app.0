@@ -13,21 +13,19 @@ export function AuthRoute (props: IAuthRouteProps) {
     const [loading, setLoading] = useState(false);
 
     useEffect(() => {
-        AuthCheck();
-    },[auth])
-
-
-    const AuthCheck = onAuthStateChanged(auth, (user) => {
+      const AuthCheck = onAuthStateChanged(auth, (user) => {
         if (user) {
-            setLoading(false)
+            setLoading(false);
         } else {
             console.log('unauthorized');
             navigate('/');
         }
     });
 
+    return () => AuthCheck();
+    },[auth])
 
-    if (loading) return <p>loading... </p>
+  if (loading) return <p>loading... </p>
         
   return (
     <>
