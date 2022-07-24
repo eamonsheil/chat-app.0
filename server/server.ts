@@ -1,12 +1,12 @@
 import { ServerToClientEvents, ClientToServerEvents, InterServerEvents, SocketData } from './Interfaces.server';
 
 import express, { Express, Request, Response } from 'express';
-import dotenv from 'dotenv'
+const dotenv = require('dotenv')
 
 const app: Express = express();
 const port = process.env.PORT
 
-import http from 'http';
+const http = require('http');
 const server = http.createServer(app);
 import { Server } from 'socket.io';
 import cors from 'cors';
